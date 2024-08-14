@@ -43,10 +43,18 @@ type Expected3 = {
 };
 
 // ============= Your Code Here =============
+// type Chainable<T = object> = {
+//   option: <K extends PropertyKey, V>(
+//     key: K extends keyof T ? never : K,
+//     value: V
+//   ) => Chainable<Omit<T, K> & Record<K, V>>;
+//   get: () => T;
+// };
+
 type Chainable<T = object> = {
-  option: <K extends string, V>(
+  option<K extends PropertyKey, V>(
     key: K extends keyof T ? never : K,
     value: V
-  ) => Chainable<Omit<T, K> & Record<K, V>>;
-  get: () => T;
+  ): Chainable<Omit<T, K> & Record<K, V>>; // Omit K from T
+  get(): T;
 };
